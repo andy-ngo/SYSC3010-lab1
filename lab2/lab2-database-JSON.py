@@ -1,8 +1,10 @@
+#this will be used to check the weather of any desired city
 from urllib.request import * 
 from urllib.parse import * 
 import json
 import sqlite3
 
+#will store the collected data into this file
 dbconnect = sqlite3.connect("demoJSON.db")
 
 dbconnect.row_factory = sqlite3.Row
@@ -49,9 +51,11 @@ print ("Pressure: %d" % current["pressure"] )
 current = data["wind"]
 print ("Wind : %d" % current["speed"])
 
+#will put the data that was just obtained into the db file
 cursor.execute('''INSERT into JSON values(?,?)''',(city,current["speed"]))
 dbconnect.commit()
 
+#will get the data in the db file and print out
 cursor.execute("SELECT * FROM JSON")
 
 for row in cursor:

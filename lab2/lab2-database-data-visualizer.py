@@ -6,6 +6,7 @@ import pandas as pd
 from matplotlib import dates as mpl_dates
 import datetime
 
+#connect to the file that will be used for plotting
 dbconnect = sqlite3.connect("sensorDB.db")
 
 dbconnect.row_factory = sqlite3.Row

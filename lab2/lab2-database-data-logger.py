@@ -14,6 +14,7 @@ dbconnect.row_factory = sqlite3.Row
 
 cursor = dbconnect.cursor()
 
+#for loop will be used to keep tracking data, the range will be set as 1000
 for i in range(1000):
 	id += 1
 	dt = datetime.datetime.now()
@@ -23,16 +24,16 @@ for i in range(1000):
 	humidity = round(humidity,1)
 	pressure = sense.get_pressure()
 	pressure = round(pressure,1)
-
+	#will put the data just collected into the table in the db file
 	cursor.execute('''insert into sensordata values(?,?,?,?,?)''',(id,dt,temp,humidity,pressure))
 
 dbconnect.commit()
 
+#will select the data that was just placed in the table to print it out
 cursor.execute('SELECT * FROM sensordata')
 #print data
 
 for row in cursor:
     print(row['id'],row['datetime'],row['temperature'],row['humidity'],row['pressure'])
-    #time.sleep(2)
         
 dbconnect.close()
