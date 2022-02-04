@@ -9,5 +9,5 @@ This lab covered the basics of the schematic of the RPi and Sense Hat.
 ## [Teamwork w/GitHub:](https://github.com/KarimMahrous/SYSC3010_Project_Repo)
 As well as learning how to properly use GitHub as a team by making branches and pull requests to merge all the changes together. 
 
-## [Forking mini-project:](https://github.com/KarimMahrous/SYSC3010Lab4)
+## Forking mini-project: [L1_G7_Lab4](https://github.com/KarimMahrous/SYSC3010Lab4)
 Forking will also be practiced by working on a small project that is presented to us by Roger.
