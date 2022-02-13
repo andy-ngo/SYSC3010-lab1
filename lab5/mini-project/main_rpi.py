@@ -35,6 +35,7 @@ def main():
         interval = input("Enter the interval between test images in seconds: ")
         interval = int(interval)
         t1 = input("Enter the threshold t1: ")
+        t1 = int(t1)
        
        ### TO-DO: Countdown to monitoring
         print("Monitoring will be taken in 10 seconds...")
