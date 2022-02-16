@@ -1,4 +1,4 @@
-# SYSC3010_Ngo_Andy
+# SYSC3010_Andy_Ngo
 This repository will contain all of the labs that will be worked on through the semester for SYSC 3010
 
 ## [Lab 1:](https://github.com/andy-ngo/SYSC3010_Ngo_Andy/tree/master/lab1)
