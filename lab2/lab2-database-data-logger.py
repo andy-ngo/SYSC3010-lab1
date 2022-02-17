@@ -15,15 +15,18 @@ dbconnect.row_factory = sqlite3.Row
 
 cursor = dbconnect.cursor()
 
-#for loop will be used to keep tracking data, the range will be set as 1000
-for i in range(10):
+#for loop will be used to keep tracking data, the range will be set as 30
+for i in range(30):
 	id += 1
 	dt = datetime.datetime.now()
-	temp = round(sense.get_temperature(),1)
-	humidity = round(sense.get_humidity,1)
-	pressure = round(sense.get_pressure,1)
+	temp = sense.get_temperature()
+	humidity = sense.get_humidity()
+	pressure = sense.get_pressure()
+	temp = round(temp,1)
+	humidity = round(humidity,1)
+	pressure = round(pressure,1)
 	#will put the data just collected into the table in the db file
-	cursor.execute('''insert into sensordata values(?,?,?,?,?)''',(id,dt,temp,humidity,pressure))
+	cursor.execute('''INSERT INTO sensordata values(?,?,?,?,?)''',(id,dt,temp,humidity,pressure))
 	time.sleep(1)
 
 dbconnect.commit()

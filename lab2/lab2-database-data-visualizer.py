@@ -1,54 +1,36 @@
 #this will be used to visualize the data from the sensor data table db file
 import sqlite3
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
-from matplotlib import dates as mpl_dates
+from plotly.subplots import make_subplots
+import plotly.express as px
 import datetime
 
 #connect to the file that will be used for plotting
 dbconnect = sqlite3.connect("sensorDB.db")
 
-dbconnect.row_factory = sqlite3.Row
+#initialize a plot with a secondary y axis
+plt = make_subplots(specs=[[{"secondary_y":True}]])
 
-cursor = dbconnect.cursor()
-cursor.execute('SELECT * FROM sensordata')
+#read from the sql file
+data = pd.read_sql_query("SELECT * FROM sensordata",dbconnect)
 
-#creating the secondary y-axis
-fig, ax1 = plt.subplots()
+#plot the data as scatter
+plot = px.scatter(data,x = 'datetime',y = ['temperature','humidity'])
+#plot on secondary axis
+plot2 = px.scatter(data, x = 'datetime',y = ['pressure'])
+plot2.update_traces(yaxis = 'y2', marker = dict(color='yellow'))
 
-ax2 = ax1.twinx()
+#add plots together
+plt.add_traces(plot.data + plot2.data)
+#create titles
+plt.layout.title = "Sensor Over Time"
+plt.layout.xaxis.title = "DateTime[H:M:S:D]"
+plt.layout.yaxis.title = "Temperature(C) and Humidity(%)"
 
-#format the datetime into hours-minutes-seconds
-data = pd.read_sql_query('SELECT * FROM sensordata', dbconnect)
-data['datetime'] = pd.to_datetime(data['datetime'])
-data.sort_values('datetime', inplace=True)
-plt.gcf().autofmt_xdate()
-date_format = mpl_dates.DateFormatter('H%-%M-%S')
-plt.gca().xaxis.set_major_formatter(date_format)
+#add in another yaxis for the pressure
+plt.layout.yaxis2.type = "log"
+plt.layout.yaxis2.title = "Pressure(millibars)"
 
-#the labels for the plot
-ax1.set_xlabel("Time[H:M:S]")
-ax1.set_ylabel("Temperature(°C),Humidity(%)")
-ax2.set_ylabel("Pressure(millibars)")
-plt.title("Sensor over time")
-
-#setting up variables
-temp = data['temperature']
-hum = data['humidity']
-pres = data['pressure']
-
-#plotting the points and giving them marks and labels
-plt.plot(data['datetime'],temp,color = 'red',marker='o',label = "Temperature(°C)")
-plt.plot(data['datetime'],hum,color = 'yellow',marker='o',label = "Humidity(%)")
-plt.plot(data['datetime'],pres,color = 'blue',marker='o',label = "Pressure(millibars)")
-
-ax1.plot(data['datetime'],temp,color = 'red',marker='o')
-ax1.plot(data['datetime'],hum,color = 'yellow',marker='o')
-ax2.plot(data['datetime'],pres,color = 'blue',marker='o')
-
-#display legend and setup as tight layout
-plt.legend()
-plt.tight_layout()
+#display plot
 plt.show()
-dbconnect.close()
