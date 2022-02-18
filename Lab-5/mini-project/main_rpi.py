@@ -1,6 +1,7 @@
 from helper_functions import camera, computer_vision,sensehat
 ### TO-DO: You may require more imports
 from time import sleep
+import base64
 
 
 def main():
@@ -24,7 +25,7 @@ def main():
         preview = False
         countdown=0
         camera.capture_image(camera_i,"data/images/background.jpg", countdown_time=countdown, preview=preview) #DO NOT MODIFY, function call must work as is 
-    
+        base64.encode("data/images/background.jpg")
     userInput = input("Would you like to arm the system? Y/N: ")
     if userInput == 'Y':
         arm_system = True #TO-DO: Should be a user input
